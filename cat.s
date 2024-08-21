@@ -28,12 +28,13 @@ _start:
     addq $16, %rbx  # skip argv[0] and argv[1]
 section0:
     open (%rbx), O_RDONLY(%rip), $0
+    pushq %rax
     testq %rax, %rax
     js exit_error
-    pushq %rax
 
+    close %rax
 section1:
-    stat %rax, -144(%rbp)
+    stat -152(%rbp), -144(%rbp)
     leaq -144(%rbp), %rbx
 
     movq 48(%rbx), %rax
