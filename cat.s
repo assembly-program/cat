@@ -32,11 +32,12 @@ section0:
     testq %rax, %rax
     js exit_error
 
-    close %rax
 section1:
     stat -152(%rbp), -144(%rbp)
-    leaq -144(%rbp), %rbx
+    testq %rax, %rax
+    js exit_error
 
+    leaq -144(%rbp), %rbx
     movq 48(%rbx), %rax
     cqo
     movq $1024, %rcx
@@ -53,6 +54,7 @@ section2:
     cmpq $0, %r8
     jne .LP0
 
+    close -152(%rbp)
 exit_success:
     exit $0
 
